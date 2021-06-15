@@ -110,16 +110,16 @@ export function getAjv(): Ajv {
           case "$ref": {
             const val = dsCopy[key]
             switch (val) {
-              case "http://json-schema.org/draft-04/schema#/properties/exclusiveMaximum":
-                dataSchema[key] =
-                  "http://json-schema.org/draft-07/schema#/properties/exclusiveMaximum"
-                break
               case "http://json-schema.org/draft-04/schema#/definitions/positiveInteger":
                 dataSchema[key] =
                   "http://json-schema.org/draft-07/schema#/definitions/nonNegativeInteger"
                 break
+              case "http://json-schema.org/draft-04/schema#/definitions/positiveIntegerDefault0":
+                dataSchema[key] =
+                  "http://json-schema.org/draft-07/schema#/definitions/nonNegativeIntegerDefault0"
+                break
               default:
-                dataSchema[key] = val
+                dataSchema[key] = (val as string).replace("draft-04", "draft-07")
             }
             break
           }
