@@ -10,6 +10,30 @@
       "$id": "another-schema",
       "$anchor": "num",
       "type": "string"
+    },
+    "exclusiveMaximum": {
+      "$ref": "http://json-schema.org/draft-07/schema#/properties/exclusiveMaximum"
+    },
+    "maxLength": {
+      "$ref": "http://json-schema.org/draft-07/schema#/definitions/nonNegativeInteger"
+    },
+    "parametersList": {
+      "type": "array",
+      "description": "The parameters needed to send a valid API call.",
+      "additionalItems": false,
+      "items": [
+        {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/parameter"
+            },
+            {
+              "$ref": "#/definitions/jsonReference"
+            }
+          ]
+        }
+      ],
+      "uniqueItems": true
     }
   },
   "properties": {
@@ -20,6 +44,12 @@
     "nonExclusiveLimits": {
       "minimum": 1,
       "maximum": 3
+    },
+    "exclusiveMaximum": {
+      "$ref": "#/definitions/exclusiveMaximum"
+    },
+    "maxLength": {
+      "$ref": "#/definitions/maxLength"
     },
     "singleValue": {"const": "foo"},
     "singleValueConstant": {"const": "foo"},

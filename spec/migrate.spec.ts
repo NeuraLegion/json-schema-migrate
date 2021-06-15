@@ -34,7 +34,7 @@ describe("migrate to draft-07 schema", () => {
 
   describe("invalid schemas", () => {
     it("should throw if id is not a string", () => {
-      assert.throws(() => draft7({id: 1}))
+      assert.throws(() => draft7({id: 1 as unknown as string}))
     })
 
     it("should throw if id has many #s", () => {

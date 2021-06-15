@@ -9,6 +9,28 @@
     "num": {
       "id": "another-schema#num",
       "type": "string"
+    },
+    "exclusiveMaximum": {
+      "$ref": "http://json-schema.org/draft-04/schema#/properties/exclusiveMaximum"
+    },
+    "maxLength": {
+      "$ref": "http://json-schema.org/draft-04/schema#/definitions/positiveInteger"
+    },
+    "parametersList": {
+      "type": "array",
+      "description": "The parameters needed to send a valid API call.",
+      "additionalItems": false,
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "#/definitions/parameter"
+          },
+          {
+            "$ref": "#/definitions/jsonReference"
+          }
+        ]
+      },
+      "uniqueItems": true
     }
   },
   "properties": {
@@ -23,6 +45,12 @@
       "exclusiveMinimum": false,
       "maximum": 3,
       "exclusiveMaximum": false
+    },
+    "exclusiveMaximum": {
+      "$ref": "#/definitions/exclusiveMaximum"
+    },
+    "maxLength": {
+      "$ref": "#/definitions/maxLength"
     },
     "singleValue": {"enum": ["foo"]},
     "singleValueConstant": {"constant": "foo"},
