@@ -119,7 +119,7 @@ export function getAjv(): Ajv {
                   "http://json-schema.org/draft-07/schema#/definitions/nonNegativeInteger"
                 break
               default:
-                dataSchema[key] = dsCopy[key]
+                dataSchema[key] = val
             }
             break
           }
