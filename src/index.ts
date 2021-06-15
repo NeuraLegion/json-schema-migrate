@@ -107,6 +107,22 @@ export function getAjv(): Ajv {
           case "exclusiveMaximum":
             migrateExclusive(dataSchema, key, "maximum")
             break
+          case "$ref": {
+            if (
+              dsCopy[key] === "http://json-schema.org/draft-04/schema#/properties/exclusiveMaximum"
+            ) {
+              dataSchema[key] =
+                "http://json-schema.org/draft-07/schema#/properties/exclusiveMaximum"
+            } else if (
+              dsCopy[key] === "http://json-schema.org/draft-04/schema#/definitions/positiveInteger"
+            ) {
+              dataSchema[key] =
+                "http://json-schema.org/draft-07/schema#/definitions/nonNegativeInteger"
+            } else {
+              dataSchema[key] = dsCopy[key]
+            }
+            break
+          }
           case "exclusiveMinimum":
             migrateExclusive(dataSchema, key, "minimum")
             break
@@ -129,16 +145,19 @@ export function getAjv(): Ajv {
             }
             break
           }
-          case "items":
+          case "items": {
             if (version === "draft2020" && Array.isArray(dsCopy.items)) {
               dataSchema.prefixItems = dsCopy.items
               if (dsCopy.additionalItems !== undefined) {
                 dataSchema.items = dsCopy.additionalItems
               }
+            } else if (!Array.isArray(dsCopy.items) && dsCopy.items.oneOf) {
+              dataSchema.items = [dsCopy.items]
             } else {
               dataSchema.items = dsCopy.items
             }
             break
+          }
           case "additionalItems":
             if (version !== "draft2020") {
               dataSchema.additionalItems = dsCopy.additionalItems
