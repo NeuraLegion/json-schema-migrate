@@ -108,18 +108,18 @@ export function getAjv(): Ajv {
             migrateExclusive(dataSchema, key, "maximum")
             break
           case "$ref": {
-            if (
-              dsCopy[key] === "http://json-schema.org/draft-04/schema#/properties/exclusiveMaximum"
-            ) {
-              dataSchema[key] =
-                "http://json-schema.org/draft-07/schema#/properties/exclusiveMaximum"
-            } else if (
-              dsCopy[key] === "http://json-schema.org/draft-04/schema#/definitions/positiveInteger"
-            ) {
-              dataSchema[key] =
-                "http://json-schema.org/draft-07/schema#/definitions/nonNegativeInteger"
-            } else {
-              dataSchema[key] = dsCopy[key]
+            const val = dsCopy[key]
+            switch (val) {
+              case "http://json-schema.org/draft-04/schema#/properties/exclusiveMaximum":
+                dataSchema[key] =
+                  "http://json-schema.org/draft-07/schema#/properties/exclusiveMaximum"
+                break
+              case "http://json-schema.org/draft-04/schema#/definitions/positiveInteger":
+                dataSchema[key] =
+                  "http://json-schema.org/draft-07/schema#/definitions/nonNegativeInteger"
+                break
+              default:
+                dataSchema[key] = dsCopy[key]
             }
             break
           }
