@@ -121,7 +121,6 @@ export function getAjv(): Ajv {
               default:
                 dataSchema[key] = val
             }
-           
             break
           }
           case "exclusiveMinimum":
